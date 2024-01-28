@@ -4,7 +4,7 @@ const Header = (): JSX.Element => {
   return (
     <View style={styles.container}>
       <View style={styles.title}>
-        <Text style={styles.titleText}>YOUR WEATHER</Text>
+        <Text style={styles.titleText}>カスタム天気</Text>
       </View>
     </View>
   )
@@ -12,7 +12,9 @@ const Header = (): JSX.Element => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#30637c',
+    backgroundColor: 'white',
+    borderBottomWidth: 1,
+    borderBottomColor: '#efefef',
     alignItems: 'center',
     justifyContent: 'flex-end',
     width: '100%',
@@ -24,7 +26,7 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#fff'
+    color: '#226387'
   }
 })
 

@@ -2,7 +2,7 @@
   "expo": {
     "name": "yourWx",
     "slug": "yourWx",
-    "schema": "exposchema",
+    "scheme": "exposchema",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

@@ -1,14 +1,13 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
+import AmedasCard from '../../components/AmedasCard'
 
-const week = (): JSX.Element => {
+const amedas = (): JSX.Element => {
   return (
     <View style={styles.container}>
       <Header />
-      <View>
-        <Text>Week</Text>
-      </View>
+      <AmedasCard />
       <Footer />
     </View>
   )
@@ -16,7 +15,7 @@ const week = (): JSX.Element => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: '#efefef',
     alignItems: 'center',
     justifyContent: 'flex-start',
     width: '100%',
@@ -24,4 +23,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default week
+export default amedas
