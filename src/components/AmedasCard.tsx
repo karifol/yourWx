@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   value: {
     width: '50%',
     height: 250,
-    alignItems: 'center',
+    marginLeft: 20,
     justifyContent: 'space-around'
   },
   valueItem: {

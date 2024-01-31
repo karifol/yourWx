@@ -2,12 +2,14 @@ import { View, StyleSheet } from 'react-native'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import AmedasCard from '../../components/AmedasCard'
+import MapCard from '../../components/MapCard'
 
 const amedas = (): JSX.Element => {
   return (
     <View style={styles.container}>
       <Header />
       <AmedasCard />
+      <MapCard />
       <Footer />
     </View>
   )
