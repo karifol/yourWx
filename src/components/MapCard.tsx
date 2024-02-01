@@ -1,38 +1,36 @@
-import React, { Component } from "react";
-import { StyleSheet, View } from "react-native";
-import MapboxGL from "@rnmapbox/maps";
+import MapView from 'react-native-maps'
+import { View, StyleSheet } from 'react-native'
 
-MapboxGL.setAccessToken("pk.eyJ1Ijoia2FpdG8wNTAyIiwiYSI6ImNscnk4aTRodDFoejMya25hcm9nN2s3aGYifQ.sN-GHBw8l-bMmRafj66cew");
+const MapComponent = (): JSX.Element => {
+  return (
+    <View style={styles.container}>
+      <MapView
+        style={styles.mapStyle}
+        initialRegion={{
+          latitude: 35.681236,
+          longitude: 139.767125,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421
+        }}
+      />
+    </View>
+  )
+}
+
+export default MapComponent
 
 const styles = StyleSheet.create({
-  page: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F5FCFF"
-  },
   container: {
+    width: '95%',
     height: 300,
-    width: 300,
-    backgroundColor: "tomato"
+    marginTop: 5,
+    borderRadius: 10,
+    overflow: 'hidden',
+    backgroundColor: '#ffffff',
+    alignItems: 'center'
   },
-  map: {
-    flex: 1
+  mapStyle: {
+    width: '100%',
+    height: '100%'
   }
-});
-
-export default class App extends Component {
-  componentDidMount() {
-    MapboxGL.setTelemetryEnabled(false);
-  }
-
-  render() {
-    return (
-      <View style={styles.page}>
-        <View style={styles.container}>
-          <MapboxGL.MapView style={styles.map} />
-        </View>
-      </View>
-    )
-  }
-}
+})
