@@ -4,16 +4,17 @@ import { router } from 'expo-router'
 interface Props {
   labelText: string
   render: string
+  icon: JSX.Element
 }
 
 const FooterButton = (props: Props): JSX.Element => {
-  const { labelText, render } = props
+  const { labelText, render, icon } = props
   const handlePress = (): void => {
     router.push(render)
   }
   return (
     <TouchableOpacity style={styles.button} onPress={handlePress}>
-      <View style={styles.icon}></View>
+      {icon}
       <View style={styles.label}>
         <Text style={styles.labelText}>{labelText}</Text>
       </View>
