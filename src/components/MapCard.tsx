@@ -1,5 +1,5 @@
 import MapView, { Marker } from 'react-native-maps'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Dimensions } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { FontAwesome5 } from '@expo/vector-icons'
 
@@ -225,7 +225,7 @@ export default MapComponent
 const styles = StyleSheet.create({
   container: {
     width: '95%',
-    height: 300,
+    height: Dimensions.get('window').height - 400 - 120,
     marginTop: 5,
     borderRadius: 10,
     overflow: 'hidden',
