@@ -1,29 +1,58 @@
+import { useEffect, useState } from 'react'
 import { StyleSheet, View, Dimensions, Text } from 'react-native'
 import { LineChart } from 'react-native-chart-kit'
 
 interface Props {
   amedasData: any
+  timeArray: string[]
+  amedasPastObj: any
 }
-
-// ラベルの設定
-const labels = ['1月', '2月', '3月', '4月', '5月']
 
 // グラフの色や罫線等の設定
 const chartConfig = {
   backgroundColor: '#fff',
   backgroundGradientFrom: '#fff',
   backgroundGradientTo: '#fff',
-  decimalPlaces: 0,
+  decimalPlaces: 1,
   strokeWidth: 0.5,
   fillShadowGradient: '#fff',
-  color: () => 'rgba(89, 87, 87, 1)'
+  color: () => '#000000',
+  propsForLabels: {
+    fontSize: 8
+  },
+  yAxisLabel: '0'
 }
 
-// グラフにする値
-const datasets = [101, 163, 187, 203, 235]
-
 const AmedasCard = (props: Props): JSX.Element => {
-  const { amedasData } = props
+  const [datasets, setDatasets] = useState({
+    data: [],
+    label: []
+  } as any)
+
+  const { amedasData, timeArray, amedasPastObj } = props
+
+  useEffect(() => {
+    if (timeArray.length === 0) {
+      return
+    }
+    if (amedasPastObj.init === true) {
+      return
+    }
+    const id = amedasData.id
+    const dataArr = [] as number[]
+    const labelArr = [] as string[]
+    for (let i = 0; i < timeArray.length; i++) {
+      const time = timeArray[i]
+      dataArr.push(amedasPastObj[time][id].temp[0] as number)
+      labelArr.push(time)
+    }
+    setDatasets({
+      data: dataArr,
+      label: labelArr
+    })
+  }
+  , [amedasData])
+
   return (
     <View style={styles.container}>
       <View style={styles.info}>
@@ -36,21 +65,26 @@ const AmedasCard = (props: Props): JSX.Element => {
       </View>
       <View style={styles.body}>
         <View style={styles.graph}>
-          <LineChart
-            data={{
-              labels: [...labels],
-              datasets: [{
-                data: datasets,
-                color: (opacity = 1) => 'rgba(230, 22, 115, 1)',
-                strokeWidth: 2
-              }]
-            }}
-            width={Dimensions.get('window').width * 0.6}
-            height={250}
-            yAxisSuffix={''}
-            chartConfig={chartConfig}
-            withInnerLines={false}
-          />
+          {
+            datasets.data.length !== 0
+              ? <LineChart
+              data={{
+                labels: [...datasets.label],
+                datasets: [{
+                  data: datasets.data,
+                  color: (opacity = 1) => 'rgba(230, 22, 115, 1)',
+                  strokeWidth: 2
+                }]
+              }}
+              width={Dimensions.get('window').width * 0.6}
+              height={250}
+              yAxisSuffix={'℃'}
+              yAxisInterval={2}
+              chartConfig={chartConfig}
+              withInnerLines={true}
+            />
+              : <Text>データがありません</Text>
+          }
         </View>
         <View style={styles.value}>
           <View style={styles.valueItem}>
@@ -116,8 +150,7 @@ const styles = StyleSheet.create({
   },
   graph: {
     width: '60%',
-    height: 250,
-    backgroundColor: '#828282'
+    height: 250
   },
   value: {
     width: '40%',

@@ -15,14 +15,20 @@ const amedas = (): JSX.Element => {
     precipitation1h: ['-'],
     time: '-'
   } as any)
+  const [timeArray, setTimeArray] = useState([] as string[])
+  const [amedasPastObj, setAmedasPastObj] = useState({ init: true })
   return (
     <View style={styles.container}>
       <Header />
       <AmedasCard
         amedasData={amedasData}
+        timeArray={timeArray}
+        amedasPastObj={amedasPastObj}
       />
       <MapComponent
         setAmedasData={setAmedasData}
+        setTimeArray={setTimeArray}
+        setAmedasPastObj={setAmedasPastObj}
       />
       <Footer />
     </View>
