@@ -1,15 +1,29 @@
 import { View, StyleSheet } from 'react-native'
+import { useState } from 'react'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import AmedasCard from '../../components/AmedasCard'
 import MapComponent from '../../components/MapCard'
 
 const amedas = (): JSX.Element => {
+  const [amedasData, setAmedasData] = useState({
+    name: '-',
+    windDirection: ['-'],
+    temp: ['-'],
+    wind: ['-'],
+    humidity: ['-'],
+    precipitation1h: ['-'],
+    time: '-'
+  } as any)
   return (
     <View style={styles.container}>
       <Header />
-      <AmedasCard />
-      <MapComponent />
+      <AmedasCard
+        amedasData={amedasData}
+      />
+      <MapComponent
+        setAmedasData={setAmedasData}
+      />
       <Footer />
     </View>
   )
