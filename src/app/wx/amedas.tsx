@@ -6,29 +6,31 @@ import AmedasCard from '../../components/AmedasCard'
 import MapComponent from '../../components/MapCard'
 
 const amedas = (): JSX.Element => {
-  const [amedasData, setAmedasData] = useState({
+  const [graphObj, setGraphObj] = useState({
+    data: [],
+    label: []
+  })
+  const [cardObj, setCardObj] = useState({
     name: '-',
     windDirection: ['-'],
+    windDirectionStr: ['-'],
     temp: ['-'],
     wind: ['-'],
     humidity: ['-'],
     precipitation1h: ['-'],
     time: '-'
-  } as any)
-  const [timeArray, setTimeArray] = useState([] as string[])
-  const [amedasPastObj, setAmedasPastObj] = useState({ init: true })
+  })
+
   return (
     <View style={styles.container}>
       <Header />
       <AmedasCard
-        amedasData={amedasData}
-        timeArray={timeArray}
-        amedasPastObj={amedasPastObj}
+        graphObj={graphObj}
+        cardObj={cardObj}
       />
       <MapComponent
-        setAmedasData={setAmedasData}
-        setTimeArray={setTimeArray}
-        setAmedasPastObj={setAmedasPastObj}
+        setCardObj={setCardObj}
+        setGraphObj={setGraphObj}
       />
       <Footer />
     </View>
