@@ -6,7 +6,7 @@ const Footer = (): JSX.Element => {
   return (
     <View style={styles.container}>
       <FooterButton labelText='アメダス' render='/wx/amedas' icon={<AntDesign name="dashboard" size={40}/>}/>
-      <FooterButton labelText='今日/明日' render='/wx/week' icon={<AntDesign name="cloudo" size={40}/>} />
+      <FooterButton labelText='今日/明日' render='/wx/tommorrow' icon={<AntDesign name="cloudo" size={40}/>} />
       <FooterButton labelText='週間' render='/wx/week' icon={<AntDesign name="calendar" size={40}/>} />
     </View>
   )

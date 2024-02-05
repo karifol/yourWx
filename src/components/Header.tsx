@@ -4,7 +4,7 @@ const Header = (): JSX.Element => {
   return (
     <View style={styles.container}>
       <View style={styles.title}>
-        <Text style={styles.titleText}>カスタム天気</Text>
+        <Text style={styles.titleText}>シンプル天気</Text>
       </View>
     </View>
   )

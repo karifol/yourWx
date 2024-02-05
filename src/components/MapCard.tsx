@@ -104,6 +104,8 @@ const MapComponent = (props: Props): JSX.Element => {
       dataArr.push(value)
       labelArr.push(key)
     }
+    dataArr.reverse()
+    labelArr.reverse()
     setGraphObj({
       data: dataArr,
       label: labelArr
