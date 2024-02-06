@@ -1,6 +1,41 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
+import { useEffect, useState } from 'react'
 
-const Forecast3days = (): JSX.Element => {
+interface Props {
+  prefecture: string
+}
+
+const Forecast3days = (props: Props): JSX.Element => {
+  const { prefecture } = props
+  const [tableObj, setTableObj] = useState<Record<string, string>>({})
+  const [forecast, setForecast] = useState<any[]>([])
+  useEffect(() => {
+    const fetchTable = async (): Promise<void> => {
+      const url = 'https://www.jma.go.jp/bosai/common/const/area.json'
+      const response = await fetch(url)
+      const data = await response.json()
+      const obj: Record<string, string> = {}
+      for (const num in data.offices) {
+        const name = data.offices[num].name as string
+        obj[name] = num
+      }
+      setTableObj(obj)
+    }
+    fetchTable().catch((error) => { console.error(error) })
+  }
+  , [])
+  useEffect(() => {
+    const fetchForecast = async (prefecture: string): Promise<void> => {
+      const num = tableObj[prefecture]
+      const url = `https://www.jma.go.jp/bosai/forecast/data/forecast/${num}.json`
+      const response = await fetch(url)
+      const data = await response.json()
+      console.log(data[0].timeSeries[0].areas)
+      setForecast(data[0].timeSeries[0].areas as any[])
+    }
+    fetchForecast(prefecture).catch((error) => { console.error(error) })
+  }
+  , [tableObj, prefecture])
   return (
     <View style={styles.container}>
       <View style={styles.card}>
@@ -8,15 +43,15 @@ const Forecast3days = (): JSX.Element => {
           <Text style={styles.titleText}>3日間予報</Text>
         </View>
         <View style={styles.select}>
-          <TouchableOpacity>
-            <Text>浜通り</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text>中通り</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text>会津</Text>
-          </TouchableOpacity>
+          {
+            forecast.map((item: any, index: number) => {
+              return (
+                <TouchableOpacity key={index}>
+                  <Text>{item.area.name}</Text>
+                </TouchableOpacity>
+              )
+            })
+          }
         </View>
         <View style={styles.forecastContainer}>
           <ScrollView style={styles.scrollForecast} horizontal={true}>

@@ -14,8 +14,8 @@ const tommorrow = (): JSX.Element => {
       <View style={styles.scrollContainer}>
         <ScrollView style={{ width: '100%' }}>
           <PrefectureCard prefecture={prefecture} />
-          <PrefectureMap setPrefecture={setPrefecture} />
-          <Forecast3days />
+          <PrefectureMap prefecture={prefecture} setPrefecture={setPrefecture} />
+          <Forecast3days prefecture={prefecture} />
         </ScrollView>
       </View>
       <Footer />
