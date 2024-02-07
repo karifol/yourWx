@@ -1,14 +1,17 @@
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native'
 import { useEffect, useState } from 'react'
-
+import telops from './weatherCode'
 interface Props {
   prefecture: string
 }
 
 const Forecast3days = (props: Props): JSX.Element => {
   const { prefecture } = props
+  const [area, setArea] = useState<string>('東京地方')
   const [tableObj, setTableObj] = useState<Record<string, string>>({})
-  const [forecast, setForecast] = useState<any[]>([])
+  const [forecast, setForecast] = useState<any>({})
+  const [areaArr, setAreaArr] = useState<any[]>([])
+  const [timeArr, setTimeArr] = useState<string[]>(['', '', ''])
   useEffect(() => {
     const fetchTable = async (): Promise<void> => {
       const url = 'https://www.jma.go.jp/bosai/common/const/area.json'
@@ -26,16 +29,58 @@ const Forecast3days = (props: Props): JSX.Element => {
   , [])
   useEffect(() => {
     const fetchForecast = async (prefecture: string): Promise<void> => {
+      if (prefecture === '') {
+        return
+      }
+      if (tableObj[prefecture] === undefined) {
+        return
+      }
       const num = tableObj[prefecture]
       const url = `https://www.jma.go.jp/bosai/forecast/data/forecast/${num}.json`
       const response = await fetch(url)
       const data = await response.json()
-      console.log(data[0].timeSeries[0].areas)
-      setForecast(data[0].timeSeries[0].areas as any[])
+      const obj = {} as any
+      data[0].timeSeries[0].areas.forEach((item: any) => {
+        obj[item.area.name] = item
+        console.log(item.weatherCodes)
+      })
+      setForecast(obj[area] as any || {})
+
+      // timeArrのセット
+      const _timeArr = data[0].timeSeries[0].timeDefines.map((item: string) => {
+        const date = new Date(item)
+        const hour = date.getHours()
+        if (hour === 0) {
+          return `${date.getMonth() + 1}月${date.getDate()}日`
+        }
+        return `${date.getMonth() + 1}月${date.getDate()}日 ${hour}時`
+      })
+      setTimeArr(_timeArr as string[])
+      // areaArrのセット
+      const _areaArr = data[0].timeSeries[0].areas.map((item: any) => {
+        return item.area.name
+      })
+      if (areaArr.length === _areaArr.length) {
+        return
+      }
+      setAreaArr(_areaArr as any[])
     }
     fetchForecast(prefecture).catch((error) => { console.error(error) })
+    
   }
-  , [tableObj, prefecture])
+  , [tableObj, prefecture, area])
+
+
+  useEffect(() => {
+    if (areaArr.length === 0) {
+      return
+    }
+    setArea(areaArr[0])
+  } , [areaArr])
+
+  const handlePress = (area: string): void => {
+    setArea(area)
+  }
   return (
     <View style={styles.container}>
       <View style={styles.card}>
@@ -44,10 +89,10 @@ const Forecast3days = (props: Props): JSX.Element => {
         </View>
         <View style={styles.select}>
           {
-            forecast.map((item: any, index: number) => {
+            areaArr.map((item: any, index: number) => {
               return (
-                <TouchableOpacity key={index}>
-                  <Text>{item.area.name}</Text>
+                <TouchableOpacity key={index} onPress={() => { handlePress(item) }}>
+                  <Text>{item}</Text>
                 </TouchableOpacity>
               )
             })
@@ -56,36 +101,27 @@ const Forecast3days = (props: Props): JSX.Element => {
         <View style={styles.forecastContainer}>
           <ScrollView style={styles.scrollForecast} horizontal={true}>
             <View style={styles.scrollInner}>
-              <View style={styles.forecast}>
-                <View style={styles.date}>
-                  <Text>2月20日</Text>
-                </View>
-                <View style={styles.icon}>
-                </View>
-                <View style={styles.pops}>
-                  <Text>降水確率:30%</Text>
-                </View>
-              </View>
-              <View style={styles.forecast}>
-                <View style={styles.date}>
-                  <Text>2月21日</Text>
-                </View>
-                <View style={styles.icon}>
-                </View>
-                <View style={styles.pops}>
-                  <Text>降水確率:30%</Text>
-                </View>
-              </View>
-              <View style={styles.forecast}>
-                <View style={styles.date}>
-                  <Text>2月22日</Text>
-                </View>
-                <View style={styles.icon}>
-                </View>
-                <View style={styles.pops}>
-                  <Text>降水確率:30%</Text>
-                </View>
-              </View>
+              {
+                forecast.weatherCodes === undefined ? <></> :
+                timeArr.map((item: any, index: number) => {
+                  return (
+                    <View style={styles.forecast} key={index}>
+                      <View style={styles.date}>
+                        <Text>{timeArr[index]}</Text>
+                      </View>
+                      <View style={styles.icon}>
+                        <Image
+                          source={{ uri: `https://www.jma.go.jp/bosai/forecast/img/${100}.png` }}
+                          style={{ width: 100, height: 100 }}
+                        />
+                      </View>
+                      <View style={styles.pops}>
+                        <Text>{telops[forecast.weatherCodes[index]][3]}</Text>
+                      </View>
+                    </View>
+                  )
+                })
+              }
             </View>
           </ScrollView>
         </View>
