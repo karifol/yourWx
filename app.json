@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "yourWx",
-    "slug": "yourWx",
-    "scheme": "exposchema",
+    "name": "simpleWx",
+    "slug": "simpleWx",
+    "scheme": "simpleWx",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,7 +16,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "jp.hogehoge.simpleWx",
+      "buildNumber": "1.0.0",
+      "infoPlist": {
+        "NSUserTrackingUsageDescription": "アプリのバグ修正およびアプリの体験向上のためにユーザー行動データを利用します"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -29,12 +34,15 @@
     },
     "plugins": [
       "expo-router",
-      [
-        "@rnmapbox/maps",
-        {
-          "RNMapboxMapsDownloadToken": "pk.eyJ1Ijoia2FpdG8wNTAyIiwiYSI6ImNscnk4aTRodDFoejMya25hcm9nN2s3aGYifQ.sN-GHBw8l-bMmRafj66cew"
-        }
-      ]
-    ]
+      "expo-tracking-transparency"
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "f62290ac-07c9-429d-9c24-e5a6be450a26"
+      }
+    }
   }
 }

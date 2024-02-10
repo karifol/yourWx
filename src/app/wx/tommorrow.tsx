@@ -1,13 +1,27 @@
 import { View, StyleSheet, ScrollView, Dimensions } from 'react-native'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import PrefectureMap from '../../components/PrefectureMap'
 import PrefectureCard from '../../components/PrefectureCard'
 import Forecast3days from '../../components/Forecast3days'
+import Overview from '../../components/Overview'
+import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency'
 
 const tommorrow = (): JSX.Element => {
   const [prefecture, setPrefecture] = useState('東京都')
+
+  useEffect(() => {
+    requestTrackingPermissionsAsync()
+      .then((status) => {
+        console.log('tracking status:', status)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }, [])
+
+
   return (
     <View style={styles.container}>
       <Header />
@@ -16,6 +30,7 @@ const tommorrow = (): JSX.Element => {
           <PrefectureCard prefecture={prefecture} />
           <PrefectureMap prefecture={prefecture} setPrefecture={setPrefecture} />
           <Forecast3days prefecture={prefecture} />
+          <Overview prefecture={prefecture} />
         </ScrollView>
       </View>
       <Footer />
