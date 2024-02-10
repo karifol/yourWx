@@ -1,14 +1,17 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, ScrollView, StyleSheet } from 'react-native'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
+import PrefectureMap from '../../components/PrefectureMap'
+import { useState } from 'react'
 
 const week = (): JSX.Element => {
+  const [prefecture, setPrefecture] = useState('東京都')
   return (
     <View style={styles.container}>
       <Header />
-      <View>
-        <Text>Week</Text>
-      </View>
+      <ScrollView style={{ width: '100%' }}>
+        <PrefectureMap prefecture={prefecture} setPrefecture={setPrefecture} />
+      </ScrollView>
       <Footer />
     </View>
   )

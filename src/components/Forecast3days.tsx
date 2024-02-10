@@ -41,6 +41,7 @@ const Forecast3days = (props: Props): JSX.Element => {
       }
       const num = tableObj[prefecture]
       const url = `https://www.jma.go.jp/bosai/forecast/data/forecast/${num}.json`
+      console.log(url)
       const response = await fetch(url)
       const data = await response.json()
       const obj = {} as any
@@ -138,8 +139,17 @@ const Forecast3days = (props: Props): JSX.Element => {
           <ScrollView style={styles.scrollForecast} horizontal={true}>
             <View style={styles.scrollInner}>
               {
-                forecast.weatherCodes === undefined ? <></> :
+                forecast.weatherCodes === undefined || imgObj === undefined ? <></> :
                 timeArr.map((item: any, index: number) => {
+                  if (telops === undefined) {
+                    return null
+                  }
+                  if (forecast.weatherCodes[index] === undefined) {
+                    return null
+                  }
+                  if (telops[forecast.weatherCodes[index]][3] === undefined) {
+                    return null;
+                  }
                   return (
                     <View style={styles.forecast} key={index}>
                       <View style={styles.date}>
@@ -153,6 +163,7 @@ const Forecast3days = (props: Props): JSX.Element => {
                       </View>
                       <View style={styles.pops}>
                         <Text>{telops[forecast.weatherCodes[index]][3]}</Text>
+                        {/* <Text>{telops[forecast.weatherCodes[index]][3]}</Text> */}
                       </View>
                     </View>
                   )
