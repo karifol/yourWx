@@ -10,6 +10,7 @@ import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency'
 
 const tommorrow = (): JSX.Element => {
   const [prefecture, setPrefecture] = useState('東京都')
+  const url = 'https://www.jma.go.jp/bosai/forecast/'
 
   useEffect(() => {
     requestTrackingPermissionsAsync()
@@ -33,7 +34,7 @@ const tommorrow = (): JSX.Element => {
           <Overview prefecture={prefecture} />
         </ScrollView>
       </View>
-      <Footer />
+      <Footer url={url} />
     </View>
   )
 }

@@ -42,6 +42,8 @@ const week = (): JSX.Element => {
     414: require('../../wx/414.png.png')
   }
 
+  const url = 'https://www.jma.go.jp/bosai/forecast/'
+
   return (
     <View style={styles.container}>
       <Header />
@@ -52,7 +54,7 @@ const week = (): JSX.Element => {
           <ForecastWeek prefecture={prefecture} imgObj={imgObj} />
         </ScrollView>
       </View>
-      <Footer />
+      <Footer url={url} />
     </View>
   )
 }

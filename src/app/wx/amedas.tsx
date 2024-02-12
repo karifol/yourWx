@@ -20,6 +20,7 @@ const amedas = (): JSX.Element => {
     precipitation1h: ['-'],
     time: '-'
   })
+  const url = 'https://www.jma.go.jp/bosai/map.html#5/34.5/137/&elem=temp&contents=amedas&interval=60'
 
   return (
     <View style={styles.container}>
@@ -32,7 +33,7 @@ const amedas = (): JSX.Element => {
         setCardObj={setCardObj}
         setGraphObj={setGraphObj}
       />
-      <Footer />
+      <Footer url={url} />
     </View>
   )
 }
