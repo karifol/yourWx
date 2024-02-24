@@ -22,7 +22,6 @@ const tommorrow = (): JSX.Element => {
       })
   }, [])
 
-
   return (
     <View style={styles.container}>
       <Header />

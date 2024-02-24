@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Dimensions } from 'react-native'
 import { useState } from 'react'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
@@ -25,14 +25,16 @@ const amedas = (): JSX.Element => {
   return (
     <View style={styles.container}>
       <Header />
-      <AmedasCard
-        graphObj={graphObj}
-        cardObj={cardObj}
-      />
-      <MapComponent
-        setCardObj={setCardObj}
-        setGraphObj={setGraphObj}
-      />
+      <View style={styles.scrollContainer}>
+        <AmedasCard
+          graphObj={graphObj}
+          cardObj={cardObj}
+        />
+        <MapComponent
+          setCardObj={setCardObj}
+          setGraphObj={setGraphObj}
+        />
+      </View>
       <Footer url={url} />
     </View>
   )
@@ -45,6 +47,11 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     width: '100%',
     height: '100%'
+  },
+  scrollContainer: {
+    height: Dimensions.get('window').height - 200,
+    width: '100%',
+    alignItems: 'center'
   }
 })
 

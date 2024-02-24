@@ -1,5 +1,5 @@
 import { StyleSheet, View, Dimensions, Text } from 'react-native'
-// import { LineChart } from 'react-native-chart-kit'
+import { LineChart } from 'react-native-chart-kit'
 
 interface Props {
   graphObj: any
@@ -7,19 +7,19 @@ interface Props {
 }
 
 // グラフの色や罫線等の設定
-// const chartConfig = {
-//   backgroundColor: '#fff',
-//   backgroundGradientFrom: '#fff',
-//   backgroundGradientTo: '#fff',
-//   decimalPlaces: 1,
-//   strokeWidth: 0.5,
-//   fillShadowGradient: '#fff',
-//   color: () => '#000000',
-//   propsForLabels: {
-//     fontSize: 8
-//   },
-//   yAxisLabel: '0'
-// }
+const chartConfig = {
+  backgroundColor: '#fff',
+  backgroundGradientFrom: '#fff',
+  backgroundGradientTo: '#fff',
+  decimalPlaces: 1,
+  strokeWidth: 0.5,
+  fillShadowGradient: '#fff',
+  color: () => '#000000',
+  propsForLabels: {
+    fontSize: 8
+  },
+  yAxisLabel: '0'
+}
 
 const AmedasCard = (props: Props): JSX.Element => {
   const { cardObj, graphObj } = props
@@ -36,7 +36,7 @@ const AmedasCard = (props: Props): JSX.Element => {
       </View>
       <View style={styles.body}>
         <View style={styles.graph}>
-          {/* {
+          {
             graphObj.data.length !== 0
               ? <LineChart
               data={{
@@ -55,7 +55,7 @@ const AmedasCard = (props: Props): JSX.Element => {
               withInnerLines={true}
             />
               : <Text>データがありません</Text>
-          } */}
+          }
         </View>
         <View style={styles.value}>
           <View style={styles.valueItem}>
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   graph: {
-    width: '30%',
+    width: '60%',
     height: 250
   },
   value: {
